@@ -2,6 +2,12 @@ github.com/digitalcircle-com-br/buildinfo v0.0.0-20220306094504-407b977f59c4 h1:
 github.com/digitalcircle-com-br/buildinfo v0.0.0-20220306094504-407b977f59c4/go.mod h1:yMGNUeY2hrzE4Dmj225WYVT8qY1xUyaCXihTO8uoLjk=
 github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307103919-64aefe48b533 h1:V29MpI8K3pDogt/tQDk9rv7vWySXztwQJM5kRkRLZVs=
 github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307103919-64aefe48b533/go.mod h1:yMGNUeY2hrzE4Dmj225WYVT8qY1xUyaCXihTO8uoLjk=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112122-0b4a3dbeaa77 h1:Gc+8j/A20IdSvjaEZTEa/2n9UlrrNlDuZilduylHuqs=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112122-0b4a3dbeaa77/go.mod h1:yMGNUeY2hrzE4Dmj225WYVT8qY1xUyaCXihTO8uoLjk=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112244-55d9bf8f21cd h1:o9S1EirZ4owkHNBknhnUrtskfnK20yro9zUIRmiEVVQ=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112244-55d9bf8f21cd/go.mod h1:yMGNUeY2hrzE4Dmj225WYVT8qY1xUyaCXihTO8uoLjk=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112458-bf70fcc17929 h1:lzmxeaNMmYljQUtO06hGek9KBsmq7qMN66E4/MOM6zw=
+github.com/digitalcircle-com-br/buildinfo v0.0.0-20220307112458-bf70fcc17929/go.mod h1:yMGNUeY2hrzE4Dmj225WYVT8qY1xUyaCXihTO8uoLjk=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=
