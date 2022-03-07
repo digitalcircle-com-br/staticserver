@@ -57,6 +57,7 @@ func serve() error {
 	http.Handle("/", fs)
 
 	prepConfig()
+	buildInfo()
 
 	srv := &http.Server{}
 
@@ -109,6 +110,7 @@ func serveTLS() error {
 	})
 
 	prepConfig()
+	buildInfo()
 
 	http.Handle("/", fs)
 	srv := &http.Server{}
@@ -294,6 +296,13 @@ func prepConfig() {
 		acfg["__url"] = r.URL.String()
 		w.Header().Add("content-type", "application/json")
 		json.NewEncoder(w).Encode(acfg)
+	})
+}
+
+func buildInfo() {
+	http.HandleFunc("/__buildinfo", func(w http.ResponseWriter, r *http.Request) {
+		bi := buildinfo.String()
+		w.Write([]byte(bi))
 	})
 }
 
