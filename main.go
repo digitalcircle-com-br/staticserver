@@ -8,7 +8,9 @@ import (
 	"crypto/x509"
 	"crypto/x509/pkix"
 	_ "embed"
+	"encoding/json"
 	"encoding/pem"
+	"errors"
 	"flag"
 	"io/ioutil"
 	"log"
@@ -16,9 +18,11 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/digitalcircle-com-br/buildinfo"
+	"gopkg.in/yaml.v3"
 )
 
 type tcpKeepAliveListener struct {
@@ -51,6 +55,9 @@ func serve() error {
 	fs := http.FileServer(http.Dir(root))
 
 	http.Handle("/", fs)
+
+	prepConfig()
+
 	srv := &http.Server{}
 
 	ln, err := net.Listen("tcp", addr)
@@ -100,6 +107,8 @@ func serveTLS() error {
 		w.Header().Add("Content-Type", "application/x-pem-file")
 		w.Write(keyPEMBlock)
 	})
+
+	prepConfig()
 
 	http.Handle("/", fs)
 	srv := &http.Server{}
@@ -243,6 +252,49 @@ func GenCertFilesForDomain(d string) error {
 		return err
 	}
 	return nil
+}
+
+func prepConfig() {
+	cfg := make(map[string]map[string]interface{})
+	_, err := os.Stat("config.yaml")
+	if err == nil {
+		bs, err := os.ReadFile("config.yaml")
+		if err == nil {
+			yaml.Unmarshal(bs, &cfg)
+		}
+	} else if errors.Is(os.ErrNotExist, err) {
+		log.Printf("No client config file found")
+	} else {
+		log.Printf("Error loading config: %s", err.Error())
+	}
+
+	if _, ok := cfg["*"]; !ok {
+		cfg["*"] = make(map[string]interface{})
+	}
+	http.HandleFunc("/__config", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Getting config for: %s", r.Host+r.URL.String())
+		hostonly := strings.Split(r.Host, ":")[0]
+		acfg, ok := cfg[r.Host+r.URL.String()]
+		if ok {
+			acfg["__key"] = r.Host + r.URL.String()
+		} else {
+			if acfg, ok = cfg[r.Host]; !ok {
+				if acfg, ok = cfg[hostonly]; !ok {
+					acfg = cfg["*"]
+					acfg["__key"] = "*"
+				} else {
+					acfg["__key"] = hostonly
+				}
+
+			} else {
+				acfg["__key"] = r.Host
+			}
+		}
+		acfg["__host"] = r.Host
+		acfg["__url"] = r.URL.String()
+		w.Header().Add("content-type", "application/json")
+		json.NewEncoder(w).Encode(acfg)
+	})
 }
 
 func main() {
